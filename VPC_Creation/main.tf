@@ -18,7 +18,7 @@ module "vpc" {
   private_data_subnet_az2_cidr = var.private_data_subnet_az2_cidr
 }
 
-# Create Nat Gateways
+# Create Nat Gateways from Module
 module "nat_gateway" {
   source                      = "../Modules/nat_gateway"
   public_subnet_az1_id        = module.vpc.public_subnet_az1_id
