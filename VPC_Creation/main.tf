@@ -4,7 +4,7 @@ provider "aws" {
   profile = "vscode"
 }
 
-# create VPC
+# create VPC from Module
 module "vpc" {
   source                       = "../Modules/vpc"
   region                       = var.region
