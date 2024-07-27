@@ -20,15 +20,15 @@ module "vpc" {
 
 # Create Nat Gateways from Module
 module "nat_gateway" {
-  source                      = "../Modules/nat_gateway"
-  public_subnet_az1_id        = module.vpc.public_subnet_az1_id
-  internet_gateway            = module.vpc.internet_gateway
-  public_subnet_az2_id        = module.vpc.public_subnet_az2_id
-  vpc_id                      = module.vpc.vpc_id
-  private_app_subnet_az1_id   = module.vpc.private_app_subnet_az1_id
-  private_data_subnet_az1_id  = module.vpc.private_data_subnet_az1_id
-  private_app_subnet_az2_id   = module.vpc.private_app_subnet_az2_id
-  private_data_subnet_az2_id  = module.vpc.private_data_subnet_az2_id
+  source                     = "../Modules/nat_gateway"
+  public_subnet_az1_id       = module.vpc.public_subnet_az1_id
+  internet_gateway           = module.vpc.internet_gateway
+  public_subnet_az2_id       = module.vpc.public_subnet_az2_id
+  vpc_id                     = module.vpc.vpc_id
+  private_app_subnet_az1_id  = module.vpc.private_app_subnet_az1_id
+  private_data_subnet_az1_id = module.vpc.private_data_subnet_az1_id
+  private_app_subnet_az2_id  = module.vpc.private_app_subnet_az2_id
+  private_data_subnet_az2_id = module.vpc.private_data_subnet_az2_id
 
 }
 
@@ -36,4 +36,14 @@ module "nat_gateway" {
 module "security_group" {
   source = "../Modules/security_groups"
   vpc_id = module.vpc.vpc_id
+}
+
+# create Ec2 Instance
+module "ec2_instance" {
+  source               = "../Modules/ec2_resource"
+  vpc_id               = module.vpc.vpc_id
+  instance_type        = var.instance_type
+  public_subnet_az1_id = module.vpc.public_subnet_az1_id
+  key_name             = var.key_name
+  user_data            = var.user_data
 }
